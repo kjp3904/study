@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{thymeleaf/layout/main}">
+<head>
+<meta charset="UTF-8"/>
+
+<title>게시판 상세</title>
+</head>
+
+<body >
+<main layout:fragment="page" role="main" class="flex-shrink-0">
+
+	<script th:inline="javascript">
+		function goModify(){
+			let modify = /*[[ @{/board/modify} ]]*/"";
+			$("#frm").attr("action", modify);
+			$("#frm").attr("method", "POST");
+			$("#frm").submit();
+		}
+
+		function goDel(){
+			let del = /*[[ @{/board/delete} ]]*/"";
+			$("#frm").attr("action", del);
+			$("#frm").attr("method", "POST");
+			$("#frm").submit();
+		}
+	</script>
+
+	<div class="container">
+	<form id="frm" action="#" th:action="@{/}" th:object="${boardDTO}" method="POST">
+		<h1>게시판 상세</h1>
+		<div id="list">
+			<input type="hidden" th:field="*{id}" />
+
+			<div style="text-align: right;">
+				<button type="button" id="btnMod" onclick="javascript:goModify();" class="btn btn-primary" >수정</button>
+				<button type="button" id="btnDel" onclick="javascript:goDel();" class="btn btn-primary" >삭제</button>
+			</div>
+			<div class="form-group">
+			    <label for="title">TITLE</label>
+			    <input type="text" class="form-control" th:field="*{title}" th:class="form-control" readonly />
+			</div>
+			<div class="form-group">
+				<label for="txtContents">CONTENTS</label>
+				<textarea class="form-control" id="txtContents" rows="5" th:field="*{contents}" readonly></textarea>
+			</div>
+		</div>
+	</form>
+	</div>
+</main>
+</body>
+</html>
